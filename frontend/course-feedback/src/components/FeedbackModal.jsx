@@ -6,6 +6,7 @@ export default function FeedbackModal({ onClose, onSubmit }) {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async () => {
     if (!rating) {
@@ -30,7 +31,10 @@ export default function FeedbackModal({ onClose, onSubmit }) {
       const data = await response.json();
 
       if (data.status === 'success') {
-        onSubmit();
+        setSubmitted(true);
+        setTimeout(() => {
+          onSubmit();
+        }, 3000); // Auto close after 3 seconds
       } else {
         setError(data.message || 'Failed to submit feedback');
       }
@@ -56,11 +60,44 @@ export default function FeedbackModal({ onClose, onSubmit }) {
     </svg>
   );
 
+  if (submitted) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-gradient-to-br from-white to-gray-50 w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-200 transform transition-all duration-300 scale-100 text-center">
+          <div className="mb-6">
+            <div className="w-20 h-20 bg-slate-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+              </svg>
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">
+              Thank You!
+            </h2>
+            <p className="text-gray-600 text-lg mb-4">
+              Your feedback has been submitted successfully.
+            </p>
+            <p className="text-gray-500">
+              We appreciate your input and will use it to improve our courses.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={onClose}
+              className="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-105"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-gradient-to-br from-white to-gray-50 w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-200 transform transition-all duration-300 scale-100">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Course Feedback
           </h2>
           <p className="text-gray-600">Help us improve by sharing your thoughts!</p>

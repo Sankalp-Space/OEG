@@ -9,5 +9,10 @@
 - [x] Enhance button styles with hover effects
 - [x] Fix input field text color (make black instead of white)
 - [x] Hide navbar on admin dashboard page
+- [x] Include OEG logo in App.jsx header
+- [x] Improve feedback modal with thank you screen after submission
+- [x] Add SEO optimization (meta tags, title, description)
+- [x] Make page simple, cool, interactive, and SEO optimized
+- [x] Implement simple slate-based color theme based on logo colors
 - [ ] Test interactive functionality
 - [ ] Verify responsive design
