@@ -1,6 +1,15 @@
 <?php
 session_start();
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 include "db.php";
 
 $username = $_POST['username'] ?? "";
@@ -19,7 +28,7 @@ if ($result->num_rows === 0) {
 
 $user = $result->fetch_assoc();
 
-if (hash('sha256', $password) === $user['password_hash']) {
+if (password_verify($password, $user['password_hash'])) {
     $_SESSION['admin'] = true;
     echo json_encode(["status" => "success"]);
 } else {

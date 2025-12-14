@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 export default function FeedbackModal({ onClose, onSubmit }) {
-  const [rating, setRating] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,52 +41,95 @@ export default function FeedbackModal({ onClose, onSubmit }) {
     }
   };
 
+  const StarIcon = ({ filled, onClick, onMouseEnter, onMouseLeave }) => (
+    <svg
+      className={`w-8 h-8 cursor-pointer transition-all duration-200 ${
+        filled ? 'text-yellow-400 scale-110' : 'text-gray-300 hover:text-yellow-300'
+      }`}
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+    </svg>
+  );
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">
-          Course Feedback
-        </h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-gradient-to-br from-white to-gray-50 w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-200 transform transition-all duration-300 scale-100">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            Course Feedback
+          </h2>
+          <p className="text-gray-600">Help us improve by sharing your thoughts!</p>
+        </div>
 
-        <label className="block mb-2 font-medium">
-          Rating (1–5) *
-        </label>
-        <select
-          className="w-full border rounded p-2 mb-4"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-        >
-          <option value="">Select rating</option>
-          {[1, 2, 3, 4, 5].map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
-          ))}
-        </select>
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl animate-pulse">
+            {error}
+          </div>
+        )}
 
-        <label className="block mb-2 font-medium">
-          Feedback (optional)
-        </label>
-        <textarea
-          className="w-full border rounded p-2 mb-4"
-          rows="3"
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-        />
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-800 mb-4 text-center">
+            How would you rate this course? *
+          </label>
+          <div className="flex justify-center gap-2 mb-2">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <StarIcon
+                key={star}
+                filled={(hoverRating || rating) >= star}
+                onClick={() => setRating(star)}
+                onMouseEnter={() => setHoverRating(star)}
+                onMouseLeave={() => setHoverRating(0)}
+              />
+            ))}
+          </div>
+          <p className="text-center text-sm text-gray-500">
+            {rating > 0 && `${rating} star${rating > 1 ? 's' : ''} selected`}
+          </p>
+        </div>
 
-        <div className="flex justify-end gap-2">
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-800 mb-3">
+            Additional Feedback (optional)
+          </label>
+          <textarea
+            className="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 resize-none"
+            rows="4"
+            placeholder="Tell us what you liked or how we can improve..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+        </div>
+
+        <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-200 rounded"
+            className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-all duration-200 transform hover:scale-105"
+            disabled={loading}
           >
-            Close
+            Cancel
           </button>
 
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            disabled={loading}
+            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            Submit
+            {loading ? (
+              <>
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Submitting...
+              </>
+            ) : (
+              'Submit Feedback'
+            )}
           </button>
         </div>
       </div>
