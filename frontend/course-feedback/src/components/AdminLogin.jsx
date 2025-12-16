@@ -38,12 +38,12 @@ export default function AdminLogin({ onLogin }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl border border-gray-200">
+      <div className="bg-white w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-2">
             Admin Login
           </h2>
-          <p className="text-gray-600">Access the feedback dashboard</p>
+          <p className="text-gray-600 text-sm sm:text-base">Access the feedback dashboard</p>
         </div>
 
         {error && (

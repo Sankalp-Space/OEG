@@ -95,12 +95,12 @@ export default function FeedbackModal({ onClose, onSubmit }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gradient-to-br from-white to-gray-50 w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-200 transform transition-all duration-300 scale-100">
+      <div className="bg-gradient-to-br from-white to-gray-50 w-full max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200 transform transition-all duration-300 scale-100">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Course Feedback
           </h2>
-          <p className="text-gray-600">Help us improve by sharing your thoughts!</p>
+          <p className="text-gray-600 text-sm sm:text-base">Help us improve by sharing your thoughts!</p>
         </div>
 
         {error && (

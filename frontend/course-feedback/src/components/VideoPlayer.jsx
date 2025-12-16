@@ -135,7 +135,7 @@ export default function VideoPlayer() {
 
   return (
     <>
-      <div className="relative w-full h-[300px] mb-4">
+      <div className="relative w-full aspect-video mb-4">
         <div ref={playerRef} className="w-full h-full rounded overflow-hidden bg-gray-100 flex items-center justify-center">
           {!playerReady && (
             <div className="text-gray-500">Loading video player...</div>
