@@ -213,23 +213,6 @@ Authorization: Bearer {admin_token}
 - **Accessibility**: WCAG compliant with proper ARIA labels
 - **Performance**: Optimized loading with lazy images and code splitting
 
-## 📱 Screenshots
-
-### Course Dashboard
-![Course Dashboard](screenshots/course-dashboard.png)
-*Main course interface with video player and feedback button*
-
-### Feedback Modal
-![Feedback Modal](screenshots/feedback-modal.png)
-*Interactive star rating system with comment field*
-
-### Admin Dashboard
-![Admin Dashboard](screenshots/admin-dashboard.png)
-*Comprehensive analytics and feedback management*
-
-### Mobile View
-![Mobile View](screenshots/mobile-view.png)
-*Responsive design optimized for mobile devices*
 
 ## 🧪 Testing
 
